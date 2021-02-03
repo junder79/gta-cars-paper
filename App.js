@@ -20,8 +20,7 @@ const HomeStack = createStackNavigator();
 function InicioStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Inicio" component={Inicio}
-      />
+      <HomeStack.Screen name="Inicio" component={Inicio}/>
       <HomeStack.Screen name="ElementoTipo" component={ElementoTipo} options={({ route }) => ({ headerTitle: route.params.tipo })} />
       <HomeStack.Screen name="DetalleTipo" component={DetalleTipo} options={({ route }) => ({ headerTitle: route.params.nombre })}  />
     </HomeStack.Navigator>
