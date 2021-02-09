@@ -11,8 +11,24 @@ function ElementoTipo({ route, navigation }) {
     const [dataCars, setDataCars] = useState('');
     const [estadoCarga, setEstadoCarga] = useState(false);
     const getData = (tipo) => {
-        var tipo = tipo.toLowerCase();
-        axios.get('https://gtavehicles.000webhostapp.com/api/api-autos.php')
+        var tipoVehiculo = tipo.toLowerCase();
+
+        // Limpiar tipoVehiculo antes de enviar a la peticion 
+
+
+        if (tipoVehiculo == "extraños") {
+            tipoVehiculo = "extranos";
+        } else if (tipoVehiculo == "helicópteros") {
+            tipoVehiculo = "helicopteros";
+        } else if (tipoVehiculo == "vehículos") {
+            tipoVehiculo = "vehiculos";
+        } else {
+            tipoVehiculo = "all";
+        }
+
+        var url = 'http://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
+
+        axios.get(url)
             .then(response => {
 
                 setDataCars(response.data);
