@@ -13,7 +13,7 @@ function Noticias() {
     const [dataNovedades, setDataNovedades] = useState('');
     const [estadoCarga, setEstadoCarga] = useState(false);
     const getNovedades = () => {
-        axios.get('https://gtavehicles.000webhostapp.com/api/api-notificaciones.php')
+        axios.get('https://gtavehicles.000webhostapp.com/rest/public/api/notificaciones')
             .then(response => {
 
                 setDataNovedades(response.data);

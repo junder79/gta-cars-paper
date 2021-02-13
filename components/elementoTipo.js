@@ -36,7 +36,7 @@ function ElementoTipo({ route, navigation }) {
            tipoVehiculo;
         }
 
-        var url = 'http://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
+        var url = 'https://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
        
         axios.get(url)
             .then(response => {
