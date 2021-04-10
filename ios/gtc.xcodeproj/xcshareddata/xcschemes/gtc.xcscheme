@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "gtacars-tvOS.app"
-               BlueprintName = "gtacars-tvOS"
-               ReferencedContainer = "container:gtacars.xcodeproj">
+               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+               BuildableName = "gtc.app"
+               BlueprintName = "gtc"
+               ReferencedContainer = "container:gtc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "gtacars-tvOSTests.xctest"
-               BlueprintName = "gtacars-tvOSTests"
-               ReferencedContainer = "container:gtacars.xcodeproj">
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "gtcTests.xctest"
+               BlueprintName = "gtcTests"
+               ReferencedContainer = "container:gtc.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,10 +54,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "gtacars-tvOS.app"
-            BlueprintName = "gtacars-tvOS"
-            ReferencedContainer = "container:gtacars.xcodeproj">
+            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+            BuildableName = "gtc.app"
+            BlueprintName = "gtc"
+            ReferencedContainer = "container:gtc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "gtacars-tvOS.app"
-            BlueprintName = "gtacars-tvOS"
-            ReferencedContainer = "container:gtacars.xcodeproj">
+            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+            BuildableName = "gtc.app"
+            BlueprintName = "gtc"
+            ReferencedContainer = "container:gtc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
