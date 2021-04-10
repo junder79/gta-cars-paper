@@ -6,7 +6,7 @@ function Inicio({ navigation }) {
     return (
         <>
             <ScrollView>
-                <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Vehiculo' })}>
+                <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Vehículos' })}>
                     <Card.Cover style={{ borderRadius: 50 }} source={require('../src/img/auto.jpg')} />
                 </Card>
                 <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Aviones' })} >
@@ -18,7 +18,10 @@ function Inicio({ navigation }) {
                 <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Motos' })} >
                     <Card.Cover style={{ borderRadius: 50 }} source={require('../src/img/moto.jpg')} />
                 </Card>
-                <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10, marginBottom: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Extranos' })} >
+                <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Helicópteros' })} >
+                    <Card.Cover style={{ borderRadius: 50 }} source={require('../src/img/helicoptero.jpg')} />
+                </Card>
+                <Card style={{ borderRadius: 50, marginTop: 10, marginLeft: 8, marginRight: 8, elevation: 10, marginBottom: 10 }} onPress={() => navigation.navigate('ElementoTipo', { tipo: 'Extraños' })} >
                     <Card.Cover style={{ borderRadius: 50 }} source={require('../src/img/extrano.jpg')} />
 
                 </Card>

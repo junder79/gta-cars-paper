@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
 import { List, Avatar, ProgressBar, Colors } from 'react-native-paper';
 import axios from 'axios';
+import ErrorMensajeCarga from './errorMensaje';
 
 function ElementoTipo({ route, navigation }) {
     const [tipo, setTipo] = useState(route.params.tipo);
@@ -10,9 +11,34 @@ function ElementoTipo({ route, navigation }) {
     }, []);
     const [dataCars, setDataCars] = useState('');
     const [estadoCarga, setEstadoCarga] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const showDialog = () => setVisible(true);
+    const hideDialog = () => {
+        setVisible(false);
+        navigation.navigate('Inicio');
+    } 
+
+
+
     const getData = (tipo) => {
-        var tipo = tipo.toLowerCase();
-        axios.get('https://gtavehicles.000webhostapp.com/api/api-autos.php')
+        var tipoVehiculo = tipo.toLowerCase();
+
+        // Limpiar tipoVehiculo antes de enviar a la peticion 
+        console.log(tipoVehiculo);
+
+        if (tipoVehiculo == "extraños") {
+            tipoVehiculo = "extranos";
+        } else if (tipoVehiculo == "helicópteros") {
+            tipoVehiculo = "helicopteros";
+        } else if (tipoVehiculo == "vehículos") {
+            tipoVehiculo = "vehiculos";
+        } else {
+           tipoVehiculo;
+        }
+
+        var url = 'https://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
+       
+        axios.get(url)
             .then(response => {
 
                 setDataCars(response.data);
@@ -20,8 +46,10 @@ function ElementoTipo({ route, navigation }) {
             })
             .catch(e => {
                 // Podemos mostrar los errores en la consola
+                showDialog();
+                
                 console.log(e);
-                setEstadoCarga(false)
+                setEstadoCarga(false);
             })
     }
 
@@ -31,6 +59,7 @@ function ElementoTipo({ route, navigation }) {
                 !estadoCarga ?
                     <ProgressBar progress={0.5} color={Colors.red800} indeterminate="true" /> : null
             }
+            <ErrorMensajeCarga visible={visible}  hideDialog={hideDialog} ></ErrorMensajeCarga>
             <FlatList data={dataCars}
                 renderItem={({ item }) => (
                     <List.Item
@@ -41,6 +70,7 @@ function ElementoTipo({ route, navigation }) {
                     />
                 )}
             />
+            
         </>
     )
 }
