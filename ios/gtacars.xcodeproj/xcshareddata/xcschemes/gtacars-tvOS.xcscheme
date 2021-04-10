@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "grandtheftcars-tvOS.app"
-               BlueprintName = "grandtheftcars-tvOS"
-               ReferencedContainer = "container:grandtheftcars.xcodeproj">
+               BuildableName = "gtacars-tvOS.app"
+               BlueprintName = "gtacars-tvOS"
+               ReferencedContainer = "container:gtacars.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "grandtheftcars-tvOSTests.xctest"
-               BlueprintName = "grandtheftcars-tvOSTests"
-               ReferencedContainer = "container:grandtheftcars.xcodeproj">
+               BuildableName = "gtacars-tvOSTests.xctest"
+               BlueprintName = "gtacars-tvOSTests"
+               ReferencedContainer = "container:gtacars.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "grandtheftcars-tvOS.app"
-            BlueprintName = "grandtheftcars-tvOS"
-            ReferencedContainer = "container:grandtheftcars.xcodeproj">
+            BuildableName = "gtacars-tvOS.app"
+            BlueprintName = "gtacars-tvOS"
+            ReferencedContainer = "container:gtacars.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "grandtheftcars-tvOS.app"
-            BlueprintName = "grandtheftcars-tvOS"
-            ReferencedContainer = "container:grandtheftcars.xcodeproj">
+            BuildableName = "gtacars-tvOS.app"
+            BlueprintName = "gtacars-tvOS"
+            ReferencedContainer = "container:gtacars.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
