@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
-import { List, Avatar, ProgressBar, Colors } from 'react-native-paper';
+import { List, Avatar, ProgressBar, Colors , Searchbar  } from 'react-native-paper';
 import axios from 'axios';
 import ErrorMensajeCarga from './errorMensaje';
-
+import filter from 'lodash.filter';
 function ElementoTipo({ route, navigation }) {
     const [tipo, setTipo] = useState(route.params.tipo);
     useEffect(() => {
@@ -19,7 +19,26 @@ function ElementoTipo({ route, navigation }) {
     } 
 
 
+    const [searchQuery, setSearchQuery] = useState('');
 
+    // const onChangeSearch = query => setSearchQuery(query);
+    const onChangeSearch = text => {
+        const formattedQuery = text.toLowerCase();
+        const filteredData = filter(dataCars, user => {
+          return contains(user, formattedQuery);
+        });
+        setDataCars(filteredData);
+        setSearchQuery(text);
+      };
+      const contains = ({ nombre_vehiculo }, query) => {
+        
+      
+        if (nombre_vehiculo.includes(query) ) {
+          return true;
+        }
+      
+        return false;
+      };
     const getData = (tipo) => {
         var tipoVehiculo = tipo.toLowerCase();
 
@@ -43,6 +62,7 @@ function ElementoTipo({ route, navigation }) {
 
                 setDataCars(response.data);
                 setEstadoCarga(true);
+                
             })
             .catch(e => {
                 // Podemos mostrar los errores en la consola
@@ -60,6 +80,11 @@ function ElementoTipo({ route, navigation }) {
                     <ProgressBar progress={0.5} color={Colors.red800} indeterminate="true" /> : null
             }
             <ErrorMensajeCarga visible={visible}  hideDialog={hideDialog} ></ErrorMensajeCarga>
+            <Searchbar
+      placeholder="Buscar"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
             <FlatList data={dataCars}
                 renderItem={({ item }) => (
                     <List.Item
