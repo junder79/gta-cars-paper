@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
-import { List, Avatar, ProgressBar, Colors , Searchbar  } from 'react-native-paper';
+import { List, Avatar, ProgressBar, Colors, Searchbar } from 'react-native-paper';
 import axios from 'axios';
 import ErrorMensajeCarga from './errorMensaje';
 import filter from 'lodash.filter';
@@ -16,29 +16,38 @@ function ElementoTipo({ route, navigation }) {
     const hideDialog = () => {
         setVisible(false);
         navigation.navigate('Inicio');
-    } 
+    }
 
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [search, setSearch] = useState('');
+    const [filteredDataSource, setFilteredDataSource] = useState([]);
+    const [masterDataSource, setMasterDataSource] = useState([]);
 
-    // const onChangeSearch = query => setSearchQuery(query);
-    const onChangeSearch = text => {
-        const formattedQuery = text.toLowerCase();
-        const filteredData = filter(dataCars, user => {
-          return contains(user, formattedQuery);
-        });
-        setDataCars(filteredData);
-        setSearchQuery(text);
-      };
-      const contains = ({ nombre_vehiculo }, query) => {
-        
-      
-        if (nombre_vehiculo.includes(query) ) {
-          return true;
+    const searchFilterFunction = (text) => {
+      // Se verifica que haya texto
+        if (text) {
+          // Inserted text is not blank
+          // Filter the masterDataSource
+          // Update FilteredDataSource
+          const newData = masterDataSource.filter(
+            function (item) {
+              const itemData = item.nombre_vehiculo
+                ? item.nombre_vehiculo.toUpperCase()
+                : ''.toUpperCase();
+              const textData = text.toUpperCase();
+              return itemData.indexOf(textData) > -1;
+          });
+          setFilteredDataSource(newData);
+          setSearch(text);
+        } else {
+          // Inserted text is blank
+          // Update FilteredDataSource with masterDataSource
+          setFilteredDataSource(masterDataSource);
+          setSearch(text);
         }
-      
-        return false;
       };
+
     const getData = (tipo) => {
         var tipoVehiculo = tipo.toLowerCase();
 
@@ -52,22 +61,23 @@ function ElementoTipo({ route, navigation }) {
         } else if (tipoVehiculo == "vehículos") {
             tipoVehiculo = "vehiculos";
         } else {
-           tipoVehiculo;
+            tipoVehiculo;
         }
 
         var url = 'https://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
-       
+
         axios.get(url)
             .then(response => {
 
                 setDataCars(response.data);
                 setEstadoCarga(true);
-                
+                setFilteredDataSource(response.data);
+                setMasterDataSource(response.data);
             })
             .catch(e => {
                 // Podemos mostrar los errores en la consola
                 showDialog();
-                
+
                 console.log(e);
                 setEstadoCarga(false);
             })
@@ -79,13 +89,13 @@ function ElementoTipo({ route, navigation }) {
                 !estadoCarga ?
                     <ProgressBar progress={0.5} color={Colors.red800} indeterminate="true" /> : null
             }
-            <ErrorMensajeCarga visible={visible}  hideDialog={hideDialog} ></ErrorMensajeCarga>
+            <ErrorMensajeCarga visible={visible} hideDialog={hideDialog} ></ErrorMensajeCarga>
             <Searchbar
-      placeholder="Buscar"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-    />
-            <FlatList data={dataCars}
+                placeholder="Buscar"
+                onChangeText={(text) => searchFilterFunction(text)}
+                value={search}
+            />
+            <FlatList data={filteredDataSource}
                 renderItem={({ item }) => (
                     <List.Item
                         onPress={() => navigation.navigate('DetalleTipo', { imagen: item.imagen_vehiculo, nombre: item.nombre_vehiculo, marca: item.marca, resistencia: item.resistencia, velocidad: item.velocidad, categoria: item.nombre_categoria, descripcion: item.descripcion_vehiculo })}
@@ -95,7 +105,7 @@ function ElementoTipo({ route, navigation }) {
                     />
                 )}
             />
-            
+
         </>
     )
 }
