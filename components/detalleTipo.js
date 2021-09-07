@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Button } from 'react';
 import { ScrollView, View, FlatList, StyleSheet } from 'react-native';
 import { List, Paragraph, Card, DataTable } from 'react-native-paper';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function DetalleTipo({ route, navigation }) {
 
@@ -13,6 +15,15 @@ function DetalleTipo({ route, navigation }) {
     const [resistencia, setResistencia] = useState(route.params.resistencia);
     const [descripcion, setDescripcion] = useState(route.params.descripcion);
 
+    const añadirFavorito = async  (valor) => {
+        try {
+            const jsonValue = JSON.stringify(valor)
+            console.log("ES "+ jsonValue);
+            await AsyncStorage.setItem('favoritos', jsonValue);
+        } catch (e) {
+            // saving error
+        }
+    }
 
     return (
         <>
@@ -23,13 +34,14 @@ function DetalleTipo({ route, navigation }) {
 
                         <Card.Content>
 
-                            <Paragraph style={{color:'white',marginTop:10}}>{descripcion}</Paragraph>
+                            <Paragraph style={{ color: 'white', marginTop: 10 }}>{descripcion}</Paragraph>
                         </Card.Content>
                     </Card>
+
                     <DataTable>
                         <DataTable.Header>
-                            <DataTable.Title>Estadísticas</DataTable.Title>
-                            <DataTable.Title numeric></DataTable.Title>
+                            <DataTable.Title>Estadísticas </DataTable.Title>
+                            <DataTable.Title numeric><Icon size={20} color="red" onPress={() => añadirFavorito({marca,categoria,velocidad,resistencia})} name="heart"></Icon></DataTable.Title>
                         </DataTable.Header>
 
                         <DataTable.Row>
