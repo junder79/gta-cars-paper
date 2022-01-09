@@ -9,9 +9,29 @@ import {
   FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import axios from 'axios';
+import Carousel from 'react-native-snap-carousel';
 function favorite() {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getNovedades();
+  }, []);
+  const [dataNovedades, setDataNovedades] = useState('');
+  const [estadoCarga, setEstadoCarga] = useState(false);
+  const getNovedades = () => {
+    axios
+      .get(
+        'https://gtavehicles.000webhostapp.com/rest/public/api/notificaciones',
+      )
+      .then((response) => {
+        setDataNovedades(response.data);
+        setEstadoCarga(true);
+      })
+      .catch((e) => {
+        // Podemos mostrar los errores en la consola
+
+        setEstadoCarga(false);
+      });
+  };
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('favoritos');
@@ -22,6 +42,97 @@ function favorite() {
       // error reading value
     }
   };
+  const SECTIONS = [
+    {
+      title: 'Newswhhire',
+      horizontal: true,
+      data: [
+        {
+          key: '1',
+          text: 'Item text 1',
+          uri: 'https://picsum.photos/id/1/200',
+        },
+        {
+          key: '2',
+          text: 'Item text 2',
+          uri: 'https://picsum.photos/id/10/200',
+        },
+
+        {
+          key: '3',
+          text: 'Item text 3',
+          uri: 'https://picsum.photos/id/1002/200',
+        },
+        {
+          key: '4',
+          text: 'Item text 4',
+          uri: 'https://picsum.photos/id/1006/200',
+        },
+        {
+          key: '5',
+          text: 'Item text 5',
+          uri: 'https://picsum.photos/id/1008/200',
+        },
+      ],
+    },
+    {
+      title: 'Tus Favoritos',
+      horizontal: true,
+      data: [
+        {
+          key: '1',
+          text: 'Item text 1',
+          uri: 'https://picsum.photos/id/1011/200',
+        },
+        {
+          key: '2',
+          text: 'Item text 2',
+          uri: 'https://picsum.photos/id/1012/200',
+        },
+
+        {
+          key: '3',
+          text: 'Item text 3',
+          uri: 'https://picsum.photos/id/1013/200',
+        },
+        {
+          key: '4',
+          text: 'Item text 4',
+          uri: 'https://picsum.photos/id/1015/200',
+        },
+        {
+          key: '5',
+          text: 'Item text 5',
+          uri: 'https://picsum.photos/id/1016/200',
+        },
+      ],
+    },
+  ];
+
+  const DATA = [
+    {
+      title: 'Main dishes',
+      data: ['Pizza', 'Burger', 'Risotto'],
+    },
+    {
+      title: 'Sides',
+      data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+    },
+    {
+      title: 'Drinks',
+      data: ['Water', 'Coke', 'Beer'],
+    },
+    {
+      title: 'Desserts',
+      data: ['Cheese Cake', 'Ice Cream'],
+    },
+  ];
+
+  const Item = ({title}) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
 
   const ListItem = ({item}) => {
     return (
@@ -41,104 +152,26 @@ function favorite() {
     <View style={styles.container}>
       <SafeAreaView style={{flex: 1}}>
         <SectionList
-          contentContainerStyle={{paddingHorizontal: 10}}
-          stickySectionHeadersEnabled={false}
-          sections={SECTIONS}
-          renderSectionHeader={({section}) => (
-            <>
-              <Text style={styles.sectionHeader}>{section.title}</Text>
-              {section.horizontal ? (
-                <FlatList
-                  horizontal
-                  data={section.data}
-                  renderItem={({item}) => <ListItem item={item} />}
-                  showsHorizontalScrollIndicator={false}
-                />
-              ) : null}
-            </>
+          sections={DATA}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({item}) => <Item title={item} />}
+          renderSectionHeader={({section: {title}}) => (
+            <Text style={styles.header}>{title}</Text>
           )}
-          renderItem={({item, section}) => {
-            if (section.horizontal) {
-              return null;
-            }
-            return <ListItem item={item} />;
-          }}
         />
       </SafeAreaView>
     </View>
   );
 }
-const SECTIONS = [
-  {
-    title: 'Newswire',
-    horizontal: true,
-    data: [
-      {
-        key: '1',
-        text: 'Item text 1',
-        uri: 'https://picsum.photos/id/1/200',
-      },
-      {
-        key: '2',
-        text: 'Item text 2',
-        uri: 'https://picsum.photos/id/10/200',
-      },
-
-      {
-        key: '3',
-        text: 'Item text 3',
-        uri: 'https://picsum.photos/id/1002/200',
-      },
-      {
-        key: '4',
-        text: 'Item text 4',
-        uri: 'https://picsum.photos/id/1006/200',
-      },
-      {
-        key: '5',
-        text: 'Item text 5',
-        uri: 'https://picsum.photos/id/1008/200',
-      },
-    ],
-  },
-  {
-    title: 'Tus Favoritos',
-    horizontal: true,
-    data: [
-      {
-        key: '1',
-        text: 'Item text 1',
-        uri: 'https://picsum.photos/id/1011/200',
-      },
-      {
-        key: '2',
-        text: 'Item text 2',
-        uri: 'https://picsum.photos/id/1012/200',
-      },
-
-      {
-        key: '3',
-        text: 'Item text 3',
-        uri: 'https://picsum.photos/id/1013/200',
-      },
-      {
-        key: '4',
-        text: 'Item text 4',
-        uri: 'https://picsum.photos/id/1015/200',
-      },
-      {
-        key: '5',
-        text: 'Item text 5',
-        uri: 'https://picsum.photos/id/1016/200',
-      },
-    ],
-  },
-];
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#121212',
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: '#fff',
   },
   sectionHeader: {
     fontWeight: '800',
@@ -148,7 +181,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   item: {
-    margin: 10,
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+  },
+  title: {
+    fontSize: 24,
   },
   itemPhoto: {
     width: 200,
