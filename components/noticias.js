@@ -1,66 +1,113 @@
-import React, {useState, useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
+import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {
-  Avatar,
-  Button,
-  Card,
-  Title,
-  Paragraph,
-  ProgressBar,
-  Colors,
-} from 'react-native-paper';
-import axios from 'axios';
-import globalEstilos from '../styles/estilos';
-function Noticias() {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+
+const ENTRIES1 = [
+  {
+    title: 'Beautiful and dramatic Antelope Canyon',
+    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+    illustration: 'https://i.imgur.com/UYiroysl.jpg',
+  },
+  {
+    title: 'Earlier this morning, NYC',
+    subtitle: 'Lorem ipsum dolor sit amet',
+    illustration:
+      'https://pbs.twimg.com/media/FPLwIgfWUAEBvmw?format=jpg&name=large',
+  },
+  {
+    title: 'Capitalize on an assortment of Business bonuses all month.e',
+    subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+    illustration:
+      'https://pbs.twimg.com/media/FPvx5SmUYBIu-xB?format=jpg&name=large',
+  },
+  {
+    title: 'Acrocorinth, Greece',
+    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+    illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
+  },
+  {
+    title: 'The lone tree, majestic landscape of New Zealand',
+    subtitle: 'Lorem ipsum dolor sit amet',
+    illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
+  },
+];
+const {width: screenWidth} = Dimensions.get('window');
+
+const Noticias = (props) => {
+  const [entries, setEntries] = useState([]);
+  const carouselRef = useRef(null);
+
+  const goForward = () => {
+    carouselRef.current.snapToNext();
+  };
+
   useEffect(() => {
-    getNovedades();
+    setEntries(ENTRIES1);
   }, []);
 
-  const LeftContent = (props) => <Avatar.Icon {...props} icon="bell-alert" />;
-  const [dataNovedades, setDataNovedades] = useState('');
-  const [estadoCarga, setEstadoCarga] = useState(false);
-  const getNovedades = () => {
-    axios
-      .get(
-        'https://gtavehicles.000webhostapp.com/rest/public/api/notificaciones',
-      )
-      .then((response) => {
-        setDataNovedades(response.data);
-        setEstadoCarga(true);
-      })
-      .catch((e) => {
-        // Podemos mostrar los errores en la consola
-
-        setEstadoCarga(false);
-      });
-  };
-  return (
-    <>
-      {!estadoCarga ? (
-        <ProgressBar
-          progress={0.5}
-          color={Colors.red800}
-          indeterminate="true"
+  const renderItem = ({item, index}, parallaxProps) => {
+    return (
+      <View style={styles.item}>
+        <ParallaxImage
+          source={{uri: item.illustration}}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0.4}
+          {...parallaxProps}
         />
-      ) : null}
-      <View>
-        <FlatList
-          data={dataNovedades}
-          renderItem={({item}) => (
-            <Card style={globalEstilos.contenedorNoticias}>
-              <Card.Title title="Novedades" left={LeftContent} />
-
-              <Card.Cover source={{uri: item.imagen_url}} />
-              <Card.Content>
-                <Title>{item.mensaje}</Title>
-                <Paragraph>{item.descripcion}</Paragraph>
-              </Card.Content>
-            </Card>
-          )}
-        />
+        <Text style={styles.title} numberOfLines={2}>
+          {item.title}
+        </Text>
       </View>
-    </>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <Carousel
+        ref={carouselRef}
+        sliderWidth={screenWidth}
+        sliderHeight={screenWidth}
+        itemWidth={screenWidth - 60}
+        data={entries}
+        renderItem={renderItem}
+        hasParallaxImages={true}
+      />
+    </View>
   );
-}
+};
 
 export default Noticias;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    width: screenWidth - 60,
+    height: '100%',
+    marginTop: 5,
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+    height: '20',
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+});

@@ -151,14 +151,23 @@ function favorite() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{flex: 1}}>
-        <SectionList
+        {/* <SectionList
           sections={DATA}
           keyExtractor={(item, index) => item + index}
           renderItem={({item}) => <Item title={item} />}
           renderSectionHeader={({section: {title}}) => (
             <Text style={styles.header}>{title}</Text>
           )}
-        />
+        /> */}
+        {/*   <Carousel
+          ref={(c) => {
+            this._carousel = c;
+          }}
+          data={}
+          renderItem={({item}) => <Item title={item} />}
+          sliderWidth={sliderWidth}
+          itemWidth={itemWidth}
+        /> */}
       </SafeAreaView>
     </View>
   );
