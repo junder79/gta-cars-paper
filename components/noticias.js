@@ -8,33 +8,34 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import axios from 'axios';
 
 const ENTRIES1 = [
   {
-    title: 'Beautiful and dramatic Antelope Canyon',
-    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+    title: 'TEST_1',
+
     illustration: 'https://i.imgur.com/UYiroysl.jpg',
   },
   {
-    title: 'Earlier this morning, NYC',
-    subtitle: 'Lorem ipsum dolor sit amet',
+    title: 'TEST_2',
+
     illustration:
       'https://pbs.twimg.com/media/FPLwIgfWUAEBvmw?format=jpg&name=large',
   },
   {
     title: 'Capitalize on an assortment of Business bonuses all month.e',
-    subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+
     illustration:
       'https://pbs.twimg.com/media/FPvx5SmUYBIu-xB?format=jpg&name=large',
   },
   {
-    title: 'Acrocorinth, Greece',
-    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+    title: 'TEST_2',
+
     illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
   },
   {
-    title: 'The lone tree, majestic landscape of New Zealand',
-    subtitle: 'Lorem ipsum dolor sit amet',
+    title: 'TEST_3',
+
     illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
   },
 ];
@@ -43,7 +44,7 @@ const {width: screenWidth} = Dimensions.get('window');
 const Noticias = (props) => {
   const [entries, setEntries] = useState([]);
   const carouselRef = useRef(null);
-
+  const [elementos, setElementos] = useState('');
   const goForward = () => {
     carouselRef.current.snapToNext();
   };
@@ -51,7 +52,10 @@ const Noticias = (props) => {
   useEffect(() => {
     setEntries(ENTRIES1);
   }, []);
-
+  const getData = () => {
+    var url =
+      'https://gtavehicles.000webhostapp.com/api-rest/public/index.php/api/helicopteros';
+  };
   const renderItem = ({item, index}, parallaxProps) => {
     return (
       <View style={styles.item}>
