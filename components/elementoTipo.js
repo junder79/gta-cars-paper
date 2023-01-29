@@ -7,7 +7,7 @@ import filter from 'lodash.filter';
 function ElementoTipo({route, navigation}) {
   const [tipo, setTipo] = useState(route.params.tipo);
   useEffect(() => {
-    getData(tipo);
+    getVehicleSpecific(tipo);
   }, []);
   const [dataCars, setDataCars] = useState('');
   const [estadoCarga, setEstadoCarga] = useState(false);
@@ -30,8 +30,8 @@ function ElementoTipo({route, navigation}) {
       // Filter the masterDataSource
       // Update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
-        const itemData = item.nombre_vehiculo
-          ? item.nombre_vehiculo.toUpperCase()
+        const itemData = item.nombre
+          ? item.nombre.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -46,39 +46,20 @@ function ElementoTipo({route, navigation}) {
     }
   };
 
-  const getData = (tipo) => {
-    var tipoVehiculo = tipo.toLowerCase();
 
-    // Limpiar tipoVehiculo antes de enviar a la peticion
-
-    if (tipoVehiculo == 'extraños') {
-      tipoVehiculo = 'extranos';
-    } else if (tipoVehiculo == 'helicópteros') {
-      tipoVehiculo = 'helicopteros';
-    } else if (tipoVehiculo == 'vehículos') {
-      tipoVehiculo = 'vehiculos';
-    } else {
-      tipoVehiculo;
-    }
-
-    var url =
-      'https://gtavehicles.000webhostapp.com/rest/public/api/' + tipoVehiculo;
-
-    axios
-      .get(url)
-      .then((response) => {
-        setDataCars(response.data);
-        setEstadoCarga(true);
-        setFilteredDataSource(response.data);
-        setMasterDataSource(response.data);
-      })
-      .catch((e) => {
-        // Podemos mostrar los errores en la consola
-        showDialog();
-
-        setEstadoCarga(false);
-      });
-  };
+  const getVehicleSpecific = async(tipo) => {
+     try {
+      const response = await axios.get('https://los-santos-cars-api.onrender.com/categoria/'+tipo);
+      setDataCars(response.data);
+      setEstadoCarga(true);
+      setFilteredDataSource(response.data);
+      setMasterDataSource(response.data);
+     } catch (error) {
+      showDialog();
+      setEstadoCarga(false);
+      console.log("Error: ", error); 
+     }  
+  }
 
   return (
     <>
@@ -99,23 +80,25 @@ function ElementoTipo({route, navigation}) {
       />
       <FlatList
         data={filteredDataSource}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
           <List.Item
             onPress={() =>
               navigation.navigate('DetalleTipo', {
-                imagen: item.imagen_vehiculo,
-                nombre: item.nombre_vehiculo,
+                imagen: item.imagen,
+                nombre: item.nombre,
                 marca: item.marca,
                 resistencia: item.resistencia,
                 velocidad: item.velocidad,
-                categoria: item.nombre_categoria,
-                descripcion: item.descripcion_vehiculo,
+                categoria: item.tipoVehiculo,
+                descripcion: item.descripcion,
               })
             }
-            title={item.nombre_vehiculo}
-            description={item.marca}
+            title={item.nombre}
+            description={item.descripcion}
+            key={item._id}
             left={(props) => (
-              <Avatar.Image size={44} source={{uri: item.imagen_vehiculo}} />
+              <Avatar.Image size={44} source={{uri: item.imagen}} />
             )}
           />
         )}
