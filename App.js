@@ -87,7 +87,7 @@ export default function App() {
             name="News"
             component={Noticias}
             options={{
-              tabBarLabel: 'News',
+              tabBarLabel: 'Newswire',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
                   name="bell-alert"
@@ -97,7 +97,7 @@ export default function App() {
               ),
             }}
           />
-          {noticias != 2 ? (
+       {/*    {noticias != 2 ? (
             <Tab.Screen
               name="Favorite"
               component={Favorite}
@@ -112,7 +112,7 @@ export default function App() {
                 ),
               }}
             />
-          ) : null}
+          ) : null} */}
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
